@@ -1,0 +1,94 @@
+---
+import { t, locales, type Locale } from "../i18n/translations";
+
+interface Props {
+  locale: Locale;
+  page: "home" | "menu" | "visit";
+}
+
+const { locale, page } = Astro.props;
+const tr = t[locale];
+const prefix = locale === "vi" ? "" : `/${locale}`;
+
+const navItems = [
+  { key: "home", label: tr.nav.home, href: `${prefix}/` },
+  { key: "menu", label: tr.nav.menu, href: `${prefix}/menu` },
+  { key: "visit", label: tr.nav.visit, href: `${prefix}/visit` },
+] as const;
+
+const switchPaths: Record<Locale, Record<string, string>> = {
+  vi: { home: "/", menu: "/menu", visit: "/visit" },
+  en: { home: "/en/", menu: "/en/menu", visit: "/en/visit" },
+};
+---
+
+<header class="sticky top-0 z-40 backdrop-blur-md bg-paper/85 border-b border-bean/10">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+    <a href={`${prefix}/`} class="flex items-center gap-3 group" aria-label={tr.siteName}>
+      <span class="block w-8 h-8 rounded-full border border-bean group-hover:bg-bean group-hover:text-paper transition-colors flex items-center justify-center text-bean text-sm font-serif" aria-hidden="true">T</span>
+      <div class="leading-tight">
+        <div class="font-serif text-lg text-bean tracking-wide">Trạm Phin</div>
+        <div class="font-mono text-[9px] tracking-[0.2em] text-bean-soft mt-0.5 hidden sm:block">SAIGON · LÂM ĐỒNG · 2018</div>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1" aria-label="Primary">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`px-4 py-2 text-sm tracking-wide transition-colors ${
+            item.key === page
+              ? "text-jade-deep border-b border-jade"
+              : "text-bean-soft hover:text-jade-deep"
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <a
+        href={`tel:${tr.visit.phone.replace(/\s/g, "")}`}
+        class="hidden sm:flex items-center gap-2 font-mono text-xs tabular tracking-wider text-bean hover:text-jade-deep transition-colors"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        {tr.visit.phone}
+      </a>
+
+      <div class="flex items-center gap-1 text-xs">
+        {locales.map((loc, i) => (
+          <>
+            {i > 0 && <span class="text-bean/30">/</span>}
+            <a
+              href={switchPaths[loc][page]}
+              class={`px-2 py-1 transition-colors font-mono tracking-wider ${
+                loc === locale ? "text-jade-deep" : "text-bean-soft hover:text-jade-deep"
+              }`}
+              hreflang={loc}
+            >
+              {loc.toUpperCase()}
+            </a>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <nav class="md:hidden border-t border-bean/10 bg-paper-soft/60" aria-label="Mobile">
+    <div class="max-w-7xl mx-auto px-2 py-1 flex items-center justify-around">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`flex-1 text-center px-2 py-2 text-xs tracking-wide ${
+            item.key === page ? "text-jade-deep" : "text-bean-soft"
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>

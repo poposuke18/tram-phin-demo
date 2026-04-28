@@ -1,0 +1,282 @@
+---
+import { t, type Locale } from "../../i18n/translations";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t[locale];
+const prefix = locale === "vi" ? "" : `/${locale}`;
+
+const heroImage =
+  "https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=1800&q=80";
+
+const farmImage =
+  "https://images.unsplash.com/photo-1442550528053-c431ecb55509?auto=format&fit=crop&w=1200&q=80";
+
+const featuredCoffees = [
+  {
+    item: tr.coffees.items.cauDatHoney,
+    image: "https://images.unsplash.com/photo-1559525839-d9acfd02da95?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    item: tr.coffees.items.daLatNatural,
+    image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    item: tr.coffees.items.lamDongAnaerobic,
+    image: "https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?auto=format&fit=crop&w=900&q=80",
+  },
+];
+
+const featuredDrinks = [
+  { item: tr.menu.items.phinSuaDa, image: "https://images.unsplash.com/photo-1517959105821-eaf2591984ca?auto=format&fit=crop&w=600&q=80" },
+  { item: tr.menu.items.pourOver, image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80" },
+  { item: tr.menu.items.eggCoffee, image: "https://images.unsplash.com/photo-1442550528053-c431ecb55509?auto=format&fit=crop&w=600&q=80" },
+];
+
+const workshops = Object.values(tr.workshops.items);
+const testimonials = tr.testimonials.items;
+---
+
+<section class="relative min-h-[92vh] flex items-end overflow-hidden">
+  <div class="absolute inset-0">
+    <img
+      src={heroImage}
+      alt=""
+      class="w-full h-full object-cover"
+      fetchpriority="high"
+      loading="eager"
+      width="1800"
+      height="1200"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-bean via-bean/70 to-bean/20"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 pb-20 pt-32 w-full">
+    <p class="font-mono text-[11px] tracking-[0.3em] text-phin mb-8 max-w-xl">{tr.home.heroEyebrow}</p>
+    <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-paper font-medium tracking-tight leading-[1.05] max-w-4xl mb-8">
+      {tr.home.heroTitle}
+    </h1>
+    <p class="text-lg md:text-xl text-paper/85 font-light leading-relaxed max-w-2xl mb-10">
+      {tr.home.heroLead}
+    </p>
+    <div class="flex flex-wrap gap-4">
+      <a
+        href={`${prefix}/menu`}
+        class="inline-flex items-center gap-2 px-7 py-3.5 bg-jade text-paper hover:bg-jade-deep transition-colors text-sm tracking-wide"
+      >
+        {tr.home.heroCta}
+        <span aria-hidden="true">→</span>
+      </a>
+      <a
+        href={`${prefix}/visit`}
+        class="inline-flex items-center gap-2 px-7 py-3.5 border border-paper/50 text-paper hover:bg-paper hover:text-bean transition-colors text-sm tracking-wide"
+      >
+        {tr.home.heroCtaSecondary}
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 px-6 bg-bean text-paper border-y border-phin/30" aria-label="Today's batch">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-[auto_1fr_auto] gap-8 items-center" data-reveal>
+    <div>
+      <p class="eyebrow eyebrow-on-dark mb-2">{tr.home.todayEyebrow}</p>
+      <p class="font-mono text-sm tabular tracking-wider text-phin">{tr.home.todayDate}</p>
+    </div>
+    <div class="md:border-l md:border-paper/15 md:pl-8">
+      <p class="font-serif text-2xl md:text-3xl text-paper mb-2">{tr.home.todayBatch}</p>
+      <p class="text-sm text-paper/70 leading-relaxed max-w-xl">{tr.home.todayNote}</p>
+    </div>
+    <a href={`${prefix}/menu`} class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 border border-phin text-phin hover:bg-phin hover:text-bean transition-colors text-xs tracking-wider font-mono">
+      {locale === "vi" ? "ĐẶT NGAY" : "ORDER"}
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<section class="py-24 md:py-32 px-6">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-14 items-center">
+    <div data-reveal class="order-2 md:order-1">
+      <p class="eyebrow mb-5">{tr.home.storyEyebrow}</p>
+      <h2 class="text-3xl md:text-4xl text-bean mb-8 font-medium leading-tight">{tr.home.storyHeading}</h2>
+      <p class="text-base text-bean leading-relaxed mb-5">{tr.home.storyBody1}</p>
+      <p class="text-base text-bean leading-relaxed mb-10">{tr.home.storyBody2}</p>
+      <blockquote class="border-l-2 border-jade pl-6 py-2">
+        <p class="font-serif text-xl text-bean italic leading-snug mb-3">"{tr.home.storyQuote}"</p>
+        <cite class="font-mono text-[11px] tracking-[0.18em] text-bean-soft not-italic">{tr.home.storyQuoteAuthor}</cite>
+      </blockquote>
+    </div>
+    <div data-reveal data-reveal-delay="1" class="order-1 md:order-2 aspect-[4/5] overflow-hidden bg-paper-soft">
+      <img
+        src={farmImage}
+        alt=""
+        loading="lazy"
+        width="900"
+        height="1125"
+        class="w-full h-full object-cover"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="py-24 px-6 bg-paper-soft/60">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex items-end justify-between gap-8 mb-12 flex-wrap" data-reveal>
+      <div>
+        <p class="eyebrow mb-4">{tr.home.coffeesEyebrow}</p>
+        <h2 class="text-3xl md:text-4xl text-bean font-medium mb-3">{tr.home.coffeesHeading}</h2>
+        <p class="text-base text-bean-soft max-w-xl">{tr.home.coffeesLead}</p>
+      </div>
+      <a href={`${prefix}/menu`} class="font-mono text-xs tracking-wider text-jade-deep hover:text-bean transition-colors border-b border-jade-deep/40 pb-1">
+        {tr.home.coffeesViewAll}
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {featuredCoffees.map(({ item, image }, i) => (
+        <article class="bg-paper border border-bean/8 group" data-reveal data-reveal-delay={i + 1}>
+          <div class="aspect-[4/3] overflow-hidden bg-paper-soft">
+            <img src={image} alt={item.name} loading="lazy" width="900" height="675" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div class="p-6">
+            <div class="flex items-baseline justify-between gap-3 mb-3">
+              <h3 class="font-serif text-xl text-bean leading-snug">{item.name}</h3>
+              <span class="price text-sm whitespace-nowrap">{item.price200}</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag">{item.altitude}</span>
+              <span class="tag tag-warm">{item.process}</span>
+            </div>
+            <p class="text-sm text-bean-soft leading-relaxed">{item.notes}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-end justify-between gap-8 mb-12 flex-wrap" data-reveal>
+      <div>
+        <p class="eyebrow mb-4">{tr.home.menuEyebrow}</p>
+        <h2 class="text-3xl md:text-4xl text-bean font-medium mb-3">{tr.home.menuHeading}</h2>
+        <p class="text-base text-bean-soft">{tr.home.menuLead}</p>
+      </div>
+      <a href={`${prefix}/menu`} class="font-mono text-xs tracking-wider text-jade-deep hover:text-bean transition-colors border-b border-jade-deep/40 pb-1">
+        {tr.home.menuViewAll}
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {featuredDrinks.map(({ item, image }, i) => (
+        <article class="flex gap-4 items-center" data-reveal data-reveal-delay={i + 1}>
+          <div class="w-24 h-24 shrink-0 overflow-hidden bg-paper-soft">
+            <img src={image} alt={item.name} loading="lazy" width="200" height="200" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between gap-3 mb-1">
+              <h3 class="font-serif text-lg text-bean">{item.name}</h3>
+              <span class="price text-xs whitespace-nowrap">{item.price}</span>
+            </div>
+            <p class="text-xs text-bean-soft leading-relaxed">{item.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="py-24 px-6 bg-paper-soft/60">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12" data-reveal>
+      <p class="eyebrow mb-4">{tr.home.workshopsEyebrow}</p>
+      <h2 class="text-3xl md:text-4xl text-bean font-medium mb-3">{tr.home.workshopsHeading}</h2>
+      <p class="text-base text-bean-soft max-w-xl mx-auto">{tr.home.workshopsLead}</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
+      {workshops.map((w, i) => (
+        <article class="border border-bean/10 p-6 hover:border-jade transition-colors" data-reveal data-reveal-delay={(i % 4) + 1}>
+          <div class="flex items-baseline justify-between gap-3 mb-3">
+            <h3 class="font-serif text-lg text-bean">{w.name}</h3>
+            <span class="price text-xs whitespace-nowrap">{w.price}</span>
+          </div>
+          <p class="font-mono text-[10px] tracking-[0.18em] text-jade-deep uppercase mb-3">{w.duration} · {w.maxPeople}</p>
+          <p class="text-sm text-bean-soft leading-relaxed">{w.desc}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="py-24 px-6 bg-bean text-paper">
+  <div class="max-w-6xl mx-auto">
+    <p class="eyebrow eyebrow-on-dark mb-10 text-center">{locale === "vi" ? "TIẾNG NÓI CỦA KHÁCH" : "VOICES"}</p>
+    <h2 class="font-serif text-3xl md:text-4xl text-paper text-center mb-16 max-w-2xl mx-auto leading-tight">{tr.testimonials.heading}</h2>
+
+    <div class="grid md:grid-cols-3 gap-10">
+      {testimonials.map((tt, i) => (
+        <figure data-reveal data-reveal-delay={i + 1}>
+          <span class="block font-serif text-5xl text-phin mb-2 leading-none" aria-hidden="true">"</span>
+          <blockquote class="font-serif text-lg text-paper leading-relaxed italic mb-5">{tt.quote}</blockquote>
+          <figcaption>
+            <p class="font-mono text-xs tracking-wider text-phin">{tt.author}</p>
+            <p class="font-mono text-[10px] tracking-[0.18em] text-paper/55 uppercase mt-1">{tt.role}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="py-24 px-6">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+    <div data-reveal>
+      <p class="eyebrow mb-4">{tr.home.visitEyebrow}</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-bean mb-3 leading-tight">{tr.home.visitHeading}</h2>
+      <p class="font-mono text-xs tracking-[0.18em] text-jade-deep uppercase mb-6">PHƯỜNG 7 · QUẬN 3 · HCMC</p>
+      <p class="text-base text-bean-soft leading-relaxed mb-8 max-w-md">{tr.home.visitLead}</p>
+      <div class="flex flex-wrap gap-3">
+        <a
+          href="https://maps.google.com/?q=73+Nguyen+Thien+Thuat+District+3+HCMC"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-jade text-paper hover:bg-jade-deep transition-colors text-sm tracking-wide"
+        >
+          {tr.home.visitCta}
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href={`tel:${tr.visit.phone.replace(/\s/g, "")}`}
+          class="inline-flex items-center gap-2 px-6 py-3 border border-bean text-bean hover:bg-bean hover:text-paper transition-colors text-sm tracking-wide font-mono tabular tracking-wider"
+        >
+          {tr.visit.phone}
+        </a>
+      </div>
+    </div>
+
+    <div data-reveal data-reveal-delay="1" class="border-l-2 border-jade/30 pl-8 py-2">
+      <dl class="space-y-5 text-sm">
+        <div>
+          <dt class="eyebrow mb-2">{locale === "vi" ? "Giờ mở cửa" : "Hours"}</dt>
+          <dd class="font-mono text-base tabular tracking-wider text-bean">{tr.visit.hours}</dd>
+          <dd class="text-xs text-bean-soft mt-1">{tr.visit.hoursClosed}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow mb-2">{locale === "vi" ? "Liên hệ" : "Contact"}</dt>
+          <dd class="font-mono text-sm tabular tracking-wider text-bean">{tr.visit.email}</dd>
+          <dd class="font-mono text-xs tabular tracking-wider text-bean-soft">{tr.visit.ig}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow mb-2">{locale === "vi" ? "Chỗ ngồi" : "Seating"}</dt>
+          <dd class="text-sm text-bean">{tr.visit.seats}</dd>
+          <dd class="text-xs text-bean-soft mt-1">{tr.visit.parking}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>

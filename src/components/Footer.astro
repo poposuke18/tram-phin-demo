@@ -1,0 +1,51 @@
+---
+import { t, type Locale } from "../i18n/translations";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t[locale];
+const prefix = locale === "vi" ? "" : `/${locale}`;
+---
+
+<footer class="mt-24 bg-bean text-paper">
+  <div class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-10">
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="block w-9 h-9 rounded-full border border-paper/60 flex items-center justify-center text-paper text-base font-serif" aria-hidden="true">T</span>
+        <span class="font-serif text-2xl tracking-wide">Trạm Phin</span>
+      </div>
+      <p class="text-base text-paper/80 max-w-md leading-relaxed">{tr.footer.tagline}</p>
+      <p class="font-mono text-[10px] tracking-[0.2em] text-phin mt-6">{tr.footer.builtWith}</p>
+    </div>
+
+    <div>
+      <p class="eyebrow eyebrow-on-dark mb-4">{tr.visit.heading}</p>
+      <p class="text-sm text-paper/80 leading-relaxed mb-3">{tr.visit.address}</p>
+      <p class="font-mono text-xs tabular tracking-wider text-paper/90 mb-1">{tr.visit.hours}</p>
+      <a href={`tel:${tr.visit.phone.replace(/\s/g, "")}`} class="font-mono text-sm tabular tracking-wider text-phin hover:text-paper transition-colors block mt-4">
+        {tr.visit.phone}
+      </a>
+      <p class="font-mono text-xs tabular tracking-wider text-paper/70 mt-1">{tr.visit.email}</p>
+    </div>
+
+    <div>
+      <p class="eyebrow eyebrow-on-dark mb-4">{locale === "vi" ? "Liên kết" : "Links"}</p>
+      <ul class="space-y-2 text-sm text-paper/80">
+        <li><a href={`${prefix}/`} class="hover:text-phin transition-colors">{tr.nav.home}</a></li>
+        <li><a href={`${prefix}/menu`} class="hover:text-phin transition-colors">{tr.nav.menu}</a></li>
+        <li><a href={`${prefix}/visit`} class="hover:text-phin transition-colors">{tr.nav.visit}</a></li>
+        <li class="pt-3"><a href="https://instagram.com/tramphin.saigon" class="hover:text-phin transition-colors">{tr.visit.ig}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-paper/10">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-paper/50">
+      <p>{tr.footer.copyright}</p>
+      <p>73 NGUYỄN THIỆN THUẬT · QUẬN 3 · HCMC</p>
+    </div>
+  </div>
+</footer>

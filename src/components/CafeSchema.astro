@@ -1,0 +1,56 @@
+---
+import { t, type Locale } from "../i18n/translations";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t[locale];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "name": "Trạm Phin",
+  "alternateName": "Phin Station",
+  "description": tr.home.heroLead,
+  "url": Astro.site?.toString() ?? "https://tram-phin-demo.vercel.app",
+  "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80",
+  "servesCuisine": ["Coffee", "Vietnamese coffee"],
+  "priceRange": "$$",
+  "telephone": "+84908123456",
+  "email": "xin.chao@tramphin.vn",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "73 Nguyễn Thiện Thuật",
+    "addressLocality": "Phường 7, Quận 3",
+    "addressRegion": "Ho Chi Minh City",
+    "addressCountry": "VN",
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 10.7686,
+    "longitude": 106.6794,
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "07:00",
+      "closes": "21:00",
+    },
+  ],
+  "sameAs": [
+    "https://instagram.com/tramphin.saigon",
+    "https://www.facebook.com/tramphin",
+    "https://zalo.me/84908123456",
+  ],
+  "founder": {
+    "@type": "Person",
+    "name": "Lâm Quang Huy",
+  },
+  "foundingDate": "2018",
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
